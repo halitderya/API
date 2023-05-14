@@ -23,15 +23,19 @@ type RowDataProps = {
 };
 
 const App: React.FC = () => {
-  const [StRowData, SetRowData] = useState<RowDataProps>();
+  const [StRowData, SetRowData] = useState<RowDataProps[]>();
 
-  useEffect(() => {
+  const getdata = () => {
     axios.get<RowDataProps[]>(URL).then((response) => {
-      console.log(response.data.entries);
-      SetRowData.bind(response.data.entries);
+      console.log(response.data);
+      SetRowData(response.data);
       console.log(StRowData);
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    getdata();
+  }, [SetRowData]);
 
   return (
     <>
@@ -54,8 +58,7 @@ const App: React.FC = () => {
               <th scope="col">Action</th>
             </tr>
           </thead>
-          {/*           <RowData count={StRowData?.count} entries={StRowData?.entries} />
-           */}{" "}
+          {<RowData count={StRowData} entries={StRowData?.entries} />}{" "}
         </table>
       </div>
     </>

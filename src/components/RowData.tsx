@@ -15,15 +15,15 @@ type RowDataProps = {
   };
 };
 
-const RowData: React.FC<RowDataProps> = (props: RowDataProps) => {
+const RowData: React.FC<RowDataProps[]> = (props: RowDataProps[]) => {
   return (
     <tr>
-      <td scope="col">{props.entries.API}</td>
-      <td scope="col">{props.entries.Auth}</td>
+      <td scope="col">{}</td>
+      {/*       <td scope="col">{props.entries.Auth}</td>
       <td scope="col">{props.entries.Category}</td>
       <td scope="col">{props.entries.Description}</td>
       <td scope="col">{props.entries.HTTPS}</td>
-      <td scope="col">{props.entries.Link}</td>
+      <td scope="col">{props.entries.Link}</td> */}
       <td>
         <button className="btn btn-danger"> Delete</button>
       </td>
