@@ -15,7 +15,7 @@ type RowDataProps = {
   };
 };
 
-const RowData: React.FC<RowDataProps[]> = (props: RowDataProps[]) => {
+export const RowData: React.FC<RowDataProps[]> = (props: RowDataProps[]) => {
   return (
     <tr>
       <td scope="col">{}</td>

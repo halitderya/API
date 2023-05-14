@@ -23,23 +23,24 @@ type RowDataProps = {
 };
 
 const App: React.FC = () => {
-  const [StRowData, SetRowData] = useState<RowDataProps[]>();
-
-  const getdata = () => {
-    axios.get<RowDataProps[]>(URL).then((response) => {
-      console.log(response.data);
-      SetRowData(response.data);
-      console.log(StRowData);
-    });
-  };
+  const [RowData, SetRowData] = useState<RowDataProps[]>();
 
   useEffect(() => {
-    getdata();
-  }, [SetRowData]);
+    const getData = async () => {
+      const response = await axios.get<RowDataProps[]>(URL);
+      SetRowData(response.data);
+    };
+    getData();
+    console.log(RowData);
+  }, []);
 
   return (
     <>
-      <div className="App">
+      {/*   {RowData?.map((item) => {
+        return <h1>{item.entries.API}</h1>;
+      })} */}
+
+      {/*  <div className="App">
         <table className="table">
           <thead>
             <tr>
@@ -58,9 +59,12 @@ const App: React.FC = () => {
               <th scope="col">Action</th>
             </tr>
           </thead>
-          {<RowData count={StRowData} entries={StRowData?.entries} />}{" "}
+          <tr></tr>
         </table>
-      </div>
+        <h1>
+          <>{RowData?.map}</>
+        </h1>
+      </div> */}
     </>
   );
 };
