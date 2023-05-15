@@ -9,36 +9,38 @@ import RowData from "./components/RowData";
 
 const URL: string = "https://api.publicapis.org/entries";
 
+type Entry = {
+  API: string;
+  Description: string;
+  Auth: string;
+  HTTPS: boolean;
+  Cors: string;
+  Link: string;
+  Category: string;
+}
+
 type RowDataProps = {
   count: number;
-  entries: {
-    API: string;
-    Description: string;
-    Auth: string;
-    HTTPS: boolean;
-    Cors: string;
-    Link: string;
-    Category: string;
-  };
+  entries: Entry[];
 };
 
 const App: React.FC = () => {
-  const [RowData, SetRowData] = useState<RowDataProps[]>();
+  const [RowData, SetRowData] = useState<RowDataProps>();
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get<RowDataProps[]>(URL);
+      const response = await axios.get<RowDataProps>(URL);
       SetRowData(response.data);
+      console.log(response.data);
     };
     getData();
-    console.log(RowData);
   }, []);
 
   return (
     <>
-      {/*   {RowData?.map((item) => {
-        return <h1>{item.entries.API}</h1>;
-      })} */}
+        {RowData?.entries.map((entry) => {
+        return <h1>{entry.API}</h1>;
+      })}
 
       {/*  <div className="App">
         <table className="table">
