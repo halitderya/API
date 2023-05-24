@@ -14,7 +14,7 @@ export interface RowDataProps {
   HTTPS: boolean;
   Cors: string;
   Link: string;
-  category: string;
+  Category: string;
 }
 
 interface ApiResponse {
@@ -35,28 +35,42 @@ const App: React.FC = () => {
 fetch(URL)
 .then((response) => response.json())
 .then((data: ApiResponse) =>{
-console.log(data.entries);
 SetRowData(data.entries);
 setLoading(false);
 
 })
 
-  console.log(RowData)
 },[]);
 
   return (
 
-  
 <>
+{loading && <p>Loading...</p>}
+
+{!loading &&
+
+(
+  
+<ul>
+  
+  {RowData.map((datas:RowDataProps) =>(
+<>
+    <li key={datas.API}>Name: {datas.Description}      |      Category: {datas.Category}  </li>
+    
+  </>
+    ))}
+</ul>
+)
 
 
-{console.log('last :',RowData)};
+
+}
+
 
 </>
 
 
 
-    
   );
 
 };
