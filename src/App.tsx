@@ -4,8 +4,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import RowData, { RowDataProps } from "./components/RowData";
 
 
-
-
 const App: React.FC = () => {
 
 const [selectedApi,setSelectedApi] =useState<RowDataProps |null>(null);
@@ -14,14 +12,10 @@ const [selectedApi,setSelectedApi] =useState<RowDataProps |null>(null);
 
     setSelectedApi(api)
   }
-
-
-
-  return (
+ return (
 
 <>
 <RowData onSelectApi={handleApiSelect} />
-<h1>test</h1>
 </>
 
 

@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { type } from "os";
 
+interface ButtonProps {
+  onClick: () => void;
+  label: string;
+}
+interface ApiResponse {
+  count: number;
+  entries: RowDataProps[];
+}
+
 export interface RowDataProps {
   API: string;
   Description: string;
@@ -12,25 +21,17 @@ export interface RowDataProps {
   Category: string;
 }
 
-interface ApiResponse {
-  count: number;
-  entries: RowDataProps[];
-}
-
 interface ApiListProps {
-  onSelectApi: (api: RowDataProps, id: number) => void;
+  onSelectApi: (api: RowDataProps) => void;
 }
 
 const URL: string = "https://api.publicapis.org/entries";
 export const RowData: React.FC<ApiListProps> = ({onSelectApi}) => {
 
-
   const [RowData, SetRowData] = useState<RowDataProps[]>([]);
-  const [count, setCount]= useState<number>(0);
   const [loading, setLoading]= useState<boolean>(true);
-  
+  const [selectedApi, setSelectedApi]= useState<RowDataProps>();
   useEffect(() => {
-
 
     fetch(URL)
     .then((response) => response.json())
@@ -38,10 +39,14 @@ export const RowData: React.FC<ApiListProps> = ({onSelectApi}) => {
     SetRowData(data.entries);
     setLoading(false);
     
-    })
+    })},[]);
     
-    },[]);
-    
+  function buttonClicked(api:RowDataProps): void {
+    onSelectApi(api)
+    console.log(api)
+    setSelectedApi(api)
+  }
+
   return (
    
     <>
@@ -53,20 +58,23 @@ export const RowData: React.FC<ApiListProps> = ({onSelectApi}) => {
   
 <ul>
   
-  {RowData.map((datas:RowDataProps) =>(
+  {RowData.map((datar:RowDataProps) =>(
 <>
-    <li key={datas.API}>Name: {datas.Description} Category: {datas.Category}  </li>
-    
+<div className="flex-container">
+<div className="flex-child">
+<li key={datar.API}>Name: {datar.Description} Category: {datar.Category}  <button onClick={()=> buttonClicked(datar)}>Select</button></li>
+
+</div>
+    <div className="flex-child">
+
+<a>{selectedApi?.API}</a>
+    </div>
+    </div>
   </>
     ))}
 </ul>
 )
-
-
-
 }
-
-
 </>
 
 
