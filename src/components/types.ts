@@ -7,3 +7,11 @@ export interface RowDataProps {
   Link: string;
   Category: string;
 }
+export interface ApiResponse {
+  count: number;
+  entries: RowDataProps[];
+}
+export interface ButtonProps {
+  onClick: () => void;
+  label: string;
+}
