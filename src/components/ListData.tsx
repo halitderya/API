@@ -11,7 +11,7 @@ export const ListData: React.FC<{ RowData: RowDataProps[] }> = ({
     setSelectedApi(api);
   }
   return (
-    <>
+    <div className="master-container">
       {RowData.map((datar: RowDataProps) => (
         <React.Fragment key={datar.API}>
           <div className="flex-container">
@@ -23,13 +23,13 @@ export const ListData: React.FC<{ RowData: RowDataProps[] }> = ({
                   onClick={() => buttonClicked(datar)}
                 />
               </li>
-            </div>
-            <div className="flex-child">
-              <span>{selectedApi?.API}</span>
+              <div className="flex-child">
+                <span>{selectedApi?.API}</span>
+              </div>
             </div>
           </div>
         </React.Fragment>
       ))}
-    </>
+    </div>
   );
 };
