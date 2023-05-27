@@ -1,13 +1,19 @@
 import { ButtonProps } from "./types";
 
-const Button: React.FC<ButtonProps> = ({ onClick, label }) => (
-  <button onClick={onClick}>{label}</button>
+const Button: React.FC<ButtonProps> = ({ onClick, label, classname }) => (
+  <button className={classname} onClick={onClick}>
+    {label}
+  </button>
 );
 
-export const RemoveButton: React.FC<ButtonProps> = ({ onClick, label }) => (
-  <Button onClick={onClick} label={label} />
-);
+export const RemoveButton: React.FC<ButtonProps> = ({
+  onClick,
+  label,
+  classname,
+}) => <Button onClick={onClick} label={label} classname={classname} />;
 
-export const SelectButton: React.FC<ButtonProps> = ({ onClick, label }) => (
-  <Button onClick={onClick} label={label} />
-);
+export const SelectButton: React.FC<ButtonProps> = ({
+  onClick,
+  label,
+  classname,
+}) => <Button onClick={onClick} label={label} classname={classname} />;

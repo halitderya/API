@@ -14,4 +14,6 @@ export interface ApiResponse {
 export interface ButtonProps {
   onClick: () => void;
   label: string;
+  classname: string;
+  
 }

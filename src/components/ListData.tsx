@@ -1,35 +1,41 @@
 import React, { useState } from "react";
 import { RowDataProps } from "./types";
 import "bootstrap/dist/css/bootstrap.css";
-import { SelectButton } from "../components/button";
+import { RemoveButton, SelectButton } from "../components/button";
+import DetailData from "./detailData";
+
 export const ListData: React.FC<{ RowData: RowDataProps[] }> = ({
   RowData,
 }) => {
-  const [selectedApi, setSelectedApi] = useState<RowDataProps | null>(null);
-  function buttonClicked(api: RowDataProps): void {
-    console.log(api);
-    setSelectedApi(api);
+  const [selectedApi, setSelectedApi] = useState<RowDataProps>();
+
+  function buttonClicked(api: RowDataProps, sender: string): void {
+    if (sender == "select") {
+      setSelectedApi(api);
+      console.log(api);
+    } else {
+    }
   }
   return (
-    <div className="master-container">
+    <div className="nav left">
       {RowData.map((datar: RowDataProps) => (
         <React.Fragment key={datar.API}>
-          <div className="flex-container">
-            <div className="flex-child">
-              <li key={datar.API}>
-                Name: {datar.Description} Category: {datar.Category}{" "}
-                <SelectButton
-                  label="Select"
-                  onClick={() => buttonClicked(datar)}
-                />
-              </li>
-              <div className="flex-child">
-                <span>{selectedApi?.API}</span>
-              </div>
-            </div>
+          <div className="listitem">
+            <p>{datar.API + datar.Description}</p>
+            <SelectButton
+              classname="button select"
+              label="Select"
+              onClick={() => buttonClicked(datar, "select")}
+            />
+            <RemoveButton
+              classname="button delete"
+              label="Remove"
+              onClick={() => buttonClicked(datar, "delete")}
+            />
           </div>
         </React.Fragment>
       ))}
     </div>
   );
 };
+export default ListData;
