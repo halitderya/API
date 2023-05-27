@@ -15,5 +15,6 @@ export interface ButtonProps {
   onClick: () => void;
   label: string;
   classname: string;
+  coordinates?:string;
   
 }

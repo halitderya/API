@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import RowData from "./components/detailData";
+import ListData from "./components/ListData";
 
 const App: React.FC = () => {
   return (
     <>
       <div className="container">
-        <RowData />
+        <ListData />
       </div>
     </>
   );
