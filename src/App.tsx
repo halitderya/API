@@ -1,15 +1,10 @@
 import React from "react";
 import "./App.css";
 import ListData from "./components/ListData";
+import TopBar from "./components/TopBar";
 
 const App: React.FC = () => {
-  return (
-    <>
-      <div className="container">
-        <ListData />
-      </div>
-    </>
-  );
+  return <ListData />;
 };
 
 export default App;

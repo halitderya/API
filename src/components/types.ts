@@ -18,3 +18,6 @@ export interface ButtonProps {
   coordinates?:string;
   
 }
+export interface topBarProps{
+  onSearch: (term: string) => void;
+}
