@@ -53,11 +53,7 @@ export const ListData: React.FC<{}> = ({}) => {
   return (
     <>
       <div className="container">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <TopBar onSearch={handleSearchTerm} onCategory={category(listData)} />
-        )}
+        {loading ? <p>Loading...</p> : <TopBar onSearch={handleSearchTerm} />}
 
         <div className={` ${!loading ? "content" : ""} `}>
           <div className="nav left">
