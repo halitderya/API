@@ -7,13 +7,17 @@ const URL: string = "https://api.publicapis.org/entries";
 
 export const ListData: React.FC<{}> = ({}) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [listData, setListdata] = useState<RowDataProps[]>([]);
+  let [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
-  const [filtered, setFiltered] = useState<RowDataProps[]>([]);
+  let [filtered, setFiltered] = useState<RowDataProps[]>([]);
 
-  let category = function (data: RowDataProps[]): string[] {
-    return Array.from(new Set(data.map((obj) => obj.Category)));
-  };
+  /*   function filterout(api: RowDataProps, argument: string) {
+    if (argument == "delete") {
+      return api;
+    } else {
+      return listData;
+    }
+  } */
 
   const handleSearchTerm = (term: string) => {
     setFiltered(
@@ -52,10 +56,7 @@ export const ListData: React.FC<{}> = ({}) => {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <TopBar
-            onSearch={handleSearchTerm}
-            onCategory={handlecategorychange}
-          />
+          <TopBar onSearch={handleSearchTerm} onCategory={category(listData)} />
         )}
 
         <div className={` ${!loading ? "content" : ""} `}>
