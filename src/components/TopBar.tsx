@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { topBarProps } from "./types";
 
 export const TopBar: React.FC<topBarProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value;
-    setSearchTerm(term);
-    onSearch(term);
+    onSearch(event.target.value);
   };
   return (
     <div className="topbar">

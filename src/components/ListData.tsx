@@ -26,7 +26,7 @@ export const ListData: React.FC<{}> = ({}) => {
       })
     );
 
-    console.log(filtered, "dhjd");
+    console.log("searchterm: ", term, "filtered  :", filtered);
   };
 
   useEffect(() => {
@@ -57,9 +57,9 @@ export const ListData: React.FC<{}> = ({}) => {
             {/*           {listData.map((listDat: RowDataProps) => (
              */}
 
-            {(filtered.length > 1 ? filtered : listData)?.map(
+            {(filtered.length > 0 ? filtered : listData)?.map(
               (listDat: RowDataProps) => (
-                <React.Fragment key={listDat.API}>
+                <React.Fragment key={listDat.API + listDat.Description}>
                   <div className="listitem">
                     <p>
                       {"Name: " +
