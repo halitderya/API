@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { topBarProps } from "./types";
 
-export const TopBar: React.FC<topBarProps> = ({ onSearch, onCategory }) => {
-  const [category, setCategory] = useState<string[]>(onCategory!);
+export const TopBar: React.FC<topBarProps> = ({ onSearch, categoryList }) => {
+  const [category, setCategory] = useState<string[]>(categoryList!);
 
   useEffect(() => {
-    setCategory(onCategory!);
+    setCategory(categoryList!);
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

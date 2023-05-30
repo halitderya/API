@@ -25,6 +25,9 @@ export const ListData: React.FC<{}> = ({}) => {
     console.log("searchterm: ", term, "filtered  :", filtered);
   };
 
+  const handlecategorychange = (category: string) => {
+    console.log("handleworked");
+  };
   useEffect(() => {
     fetch(URL)
       .then((response) => response.json())
@@ -49,7 +52,10 @@ export const ListData: React.FC<{}> = ({}) => {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <TopBar onSearch={handleSearchTerm} onCategory={category(listData)} />
+          <TopBar
+            onSearch={handleSearchTerm}
+            onCategory={handlecategorychange}
+          />
         )}
 
         <div className={` ${!loading ? "content" : ""} `}>
