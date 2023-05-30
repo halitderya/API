@@ -40,7 +40,7 @@ export const TopBar: React.FC<topBarProps> = ({ onSearch }) => {
 
         <input
           onChange={handleSearchChange}
-          value={searchTerm}
+          // value={searchTerm}
           className="searchbar"
           type="text"
           placeholder="Search..."
