@@ -7,25 +7,62 @@ const URL: string = "https://api.publicapis.org/entries";
 
 export const ListData: React.FC<{}> = ({}) => {
   const [loading, setLoading] = useState<boolean>(true);
-  let [listData, setListdata] = useState<RowDataProps[]>([]);
+  const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
-  let [filtered, setFiltered] = useState<RowDataProps[]>([]);
+  const [filtered, setFiltered] = useState<RowDataProps[]>([]);
+  const [searchterm, setsearchterm] = useState<string>("");
+
+  let selectedcategory: string = "";
 
   const handleSearchTerm = (term: string) => {
+    setsearchterm(term);
+    /*  
     setFiltered(
-      listData.filter((listd) => {
-        return listd.API.toLowerCase().indexOf(term.toLowerCase()) !== -1;
+      listData.filter((filt) => {
+        return filt.API.toLowerCase().indexOf(term.toLowerCase()) !== -1;
       })
-    );
-
-    console.log("searchterm: ", term, "filtered  :", filtered);
+    ); */
   };
+
+  //const masterfilterhandler = () => {};
+
+  const handleCategoryChange = (newcategory: string) => {
+    console.log("newcategory: ", newcategory, "searchterm: ", searchterm);
+
+    if (newcategory == "---All---" && searchterm == "") {
+      setFiltered(listData); // initial state
+    } else if (newcategory !== "---All---" && searchterm == "") {
+      selectedcategory = newcategory;
+      console.log("CATEGORY SELECTED NO SEARCH TERM");
+
+      setFiltered(
+        listData.filter((listd) => {
+          return listd.Category.indexOf(selectedcategory) !== -1;
+        })
+      );
+    } else if (newcategory !== "---All---" && searchterm !== "") {
+      console.log("CATEGORY SELECTED SEARCH ENTERED");
+      let temp = listData.filter((listd) => {
+        return listd.Category.indexOf(newcategory) !== -1;
+      });
+
+      console.log("temp  :", temp);
+
+      setFiltered(
+        temp.filter((filt) => {
+          return (
+            filt.API.toLowerCase().indexOf(searchterm.toLowerCase()) !== -1
+          );
+        })
+      );
+      console.log("filtered  :", filtered);
+    }
+  };
+
   let category = function (data: RowDataProps[]): string[] {
     return Array.from(new Set(data.map((obj) => obj.Category)));
   };
-  const handleCategoryChange = (newcategory: string) => {
-    console.log(newcategory);
-  };
+
   useEffect(() => {
     fetch(URL)
       .then((response) => response.json())

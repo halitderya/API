@@ -6,15 +6,14 @@ export const TopBar: React.FC<topBarProps> = ({
   categoryList,
   onCategoryChange,
 }) => {
-  const [category, setCategory] = useState<string[]>(categoryList!);
+  // const [category, setCategory] = useState<string[]>(categoryList!);
+
+  let categoryLis = categoryList;
+  if (categoryLis!.indexOf("---All---") === -1)
+    categoryLis!.unshift("---All---");
 
   useEffect(() => {
     //since react is in strict mode, useeffects works twice.
-
-    if (categoryList?.indexOf("---All---") === -1)
-      categoryList.unshift("---All---");
-
-    setCategory(categoryList!);
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +25,7 @@ export const TopBar: React.FC<topBarProps> = ({
   ) => {
     onCategoryChange(event.target.value);
   };
+
   return (
     <div className="topbar">
       <label>Filter By CORS</label>
@@ -44,14 +44,14 @@ export const TopBar: React.FC<topBarProps> = ({
       </div>
       <div className="searchgroup">
         <select onChange={handleCategoryChange} className="categoryselect">
-          {category.map((cat) => (
+          {categoryLis!.map((cat) => (
             <option value={cat.toString()}>{cat.toString()}</option>
           ))}
         </select>
 
         <input
           onChange={handleSearchChange}
-          // value={searchTerm}
+          //  value={onSearch.toString()}
           className="searchbar"
           type="text"
           placeholder="Search..."
