@@ -11,14 +11,6 @@ export const ListData: React.FC<{}> = ({}) => {
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   let [filtered, setFiltered] = useState<RowDataProps[]>([]);
 
-  /*   function filterout(api: RowDataProps, argument: string) {
-    if (argument == "delete") {
-      return api;
-    } else {
-      return listData;
-    }
-  } */
-
   const handleSearchTerm = (term: string) => {
     setFiltered(
       listData.filter((listd) => {
@@ -31,8 +23,8 @@ export const ListData: React.FC<{}> = ({}) => {
   let category = function (data: RowDataProps[]): string[] {
     return Array.from(new Set(data.map((obj) => obj.Category)));
   };
-  const handlecategorychange = (category: string) => {
-    console.log("handleworked");
+  const handleCategoryChange = (newcategory: string) => {
+    console.log(newcategory);
   };
   useEffect(() => {
     fetch(URL)
@@ -58,7 +50,11 @@ export const ListData: React.FC<{}> = ({}) => {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <TopBar onSearch={handleSearchTerm} onCategory={category(listData)} />
+          <TopBar
+            onSearch={handleSearchTerm}
+            categoryList={category(listData)}
+            onCategoryChange={handleCategoryChange}
+          />
         )}
 
         <div className={` ${!loading ? "content" : ""} `}>
