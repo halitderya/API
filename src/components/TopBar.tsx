@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { topBarProps } from "./types";
 
-export const TopBar: React.FC<topBarProps> = ({ onSearch }) => {
+export const TopBar: React.FC<topBarProps> = ({ onSearch, onCategory }) => {
+  const [category, setCategory] = useState<string[]>(onCategory!);
+
+  useEffect(() => {
+    onCategory?.unshift("---All---");
+    setCategory(onCategory!);
+  }, []);
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(event.target.value);
   };
