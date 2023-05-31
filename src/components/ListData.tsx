@@ -28,7 +28,9 @@ export const ListData: React.FC<{}> = ({}) => {
 
     console.log("searchterm: ", term, "filtered  :", filtered);
   };
-
+  let category = function (data: RowDataProps[]): string[] {
+    return Array.from(new Set(data.map((obj) => obj.Category)));
+  };
   const handlecategorychange = (category: string) => {
     console.log("handleworked");
   };
@@ -53,7 +55,11 @@ export const ListData: React.FC<{}> = ({}) => {
   return (
     <>
       <div className="container">
-        {loading ? <p>Loading...</p> : <TopBar onSearch={handleSearchTerm} />}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <TopBar onSearch={handleSearchTerm} onCategory={category(listData)} />
+        )}
 
         <div className={` ${!loading ? "content" : ""} `}>
           <div className="nav left">

@@ -20,4 +20,5 @@ export interface ButtonProps {
 }
 export interface topBarProps{
   onSearch: (term: string) => void;
+  onCategory?: string[];
 }

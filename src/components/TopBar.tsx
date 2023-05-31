@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { topBarProps } from "./types";
 
 export const TopBar: React.FC<topBarProps> = ({ onSearch, onCategory }) => {
@@ -35,10 +35,9 @@ export const TopBar: React.FC<topBarProps> = ({ onSearch, onCategory }) => {
       </div>
       <div className="searchgroup">
         <select className="categoryselect">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
+          {category.map((cat) => (
+            <option value={cat.toString()}>{cat.toString()}</option>
+          ))}
         </select>
 
         <input
