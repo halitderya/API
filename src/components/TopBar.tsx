@@ -43,7 +43,11 @@ export const TopBar: React.FC<topBarProps> = ({
         <div></div>
       </div>
       <div className="searchgroup">
-        <select onChange={handleCategoryChange} className="categoryselect">
+        <select
+          defaultValue={"---All---"}
+          onChange={handleCategoryChange}
+          className="categoryselect"
+        >
           {categoryLis!.map((cat) => (
             <option value={cat.toString()}>{cat.toString()}</option>
           ))}

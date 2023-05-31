@@ -10,54 +10,68 @@ export const ListData: React.FC<{}> = ({}) => {
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
-  const [searchterm, setsearchterm] = useState<string>("");
-
   let selectedcategory: string = "";
+  let searchterm: string = "";
 
-  const handleSearchTerm = (term: string) => {
-    setsearchterm(term);
-    /*  
-    setFiltered(
-      listData.filter((filt) => {
-        return filt.API.toLowerCase().indexOf(term.toLowerCase()) !== -1;
-      })
-    ); */
+  const handleCategoryChange = (catselected: string) => {
+    selectedcategory = catselected;
+    masterfilterhandler(catselected, searchterm);
   };
 
-  //const masterfilterhandler = () => {};
+  const handleSearchTerm = (term: string) => {
+    searchterm = term;
+    masterfilterhandler(selectedcategory, term);
+  };
 
-  const handleCategoryChange = (newcategory: string) => {
-    console.log("newcategory: ", newcategory, "searchterm: ", searchterm);
-
-    if (newcategory == "---All---" && searchterm == "") {
+  const masterfilterhandler = (
+    selectedcategory: string,
+    searchterm?: string
+  ) => {
+    if (selectedcategory == "---All---" && searchterm == "") {
       setFiltered(listData); // initial state
-    } else if (newcategory !== "---All---" && searchterm == "") {
-      selectedcategory = newcategory;
-      console.log("CATEGORY SELECTED NO SEARCH TERM");
-
+      console.log(
+        "1 category selected: ",
+        selectedcategory,
+        "searchterm not entered: ",
+        searchterm
+      );
+      selectedcategory = "";
+    } else if (selectedcategory !== "---All---" && searchterm == "") {
+      console.log(
+        "2 category selected: ",
+        selectedcategory,
+        "searchterm not entered: ",
+        searchterm
+      );
       setFiltered(
         listData.filter((listd) => {
-          return listd.Category.indexOf(selectedcategory) !== -1;
+          return listd.Category.indexOf(selectedcategory!) !== -1;
         })
       );
-    } else if (newcategory !== "---All---" && searchterm !== "") {
-      console.log("CATEGORY SELECTED SEARCH ENTERED");
+      console.log("filtered :", filtered);
+    } else if (selectedcategory !== "---All---" && searchterm !== "") {
+      console.log(
+        "3 CATEGORY ",
+        selectedcategory,
+        " SELECTED SEARCH ",
+        searchterm,
+        " ENTERED"
+      );
       let temp = listData.filter((listd) => {
-        return listd.Category.indexOf(newcategory) !== -1;
+        return listd.Category.indexOf(selectedcategory!) !== -1;
       });
-
-      console.log("temp  :", temp);
 
       setFiltered(
         temp.filter((filt) => {
           return (
-            filt.API.toLowerCase().indexOf(searchterm.toLowerCase()) !== -1
+            filt.API.toLowerCase().indexOf(searchterm!.toLowerCase()) !== -1
           );
         })
       );
-      console.log("filtered  :", filtered);
     }
   };
+
+  ////////////search ended
 
   let category = function (data: RowDataProps[]): string[] {
     return Array.from(new Set(data.map((obj) => obj.Category)));
@@ -68,6 +82,7 @@ export const ListData: React.FC<{}> = ({}) => {
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         setListdata(data.entries);
+        setFiltered(data.entries);
         setLoading(false);
       });
   }, []);
@@ -99,31 +114,29 @@ export const ListData: React.FC<{}> = ({}) => {
             {/*           {listData.map((listDat: RowDataProps) => (
              */}
 
-            {(filtered.length > 0 ? filtered : listData)?.map(
-              (listDat: RowDataProps) => (
-                <React.Fragment key={listDat.API + listDat.Description}>
-                  <div className="listitem">
-                    <p>
-                      {"Name: " +
-                        listDat.API +
-                        " | " +
-                        "  Category:" +
-                        listDat.Category}
-                    </p>
-                    <SelectButton
-                      classname="button select"
-                      label="Select"
-                      onClick={() => buttonClicked(listDat, "select")}
-                    />
-                    <RemoveButton
-                      classname="button delete"
-                      label="Remove"
-                      onClick={() => buttonClicked(listDat, "delete")}
-                    />
-                  </div>
-                </React.Fragment>
-              )
-            )}
+            {filtered.map((listDat: RowDataProps) => (
+              <React.Fragment key={listDat.API + listDat.Description}>
+                <div className="listitem">
+                  <p>
+                    {"Name: " +
+                      listDat.API +
+                      " | " +
+                      "  Category:" +
+                      listDat.Category}
+                  </p>
+                  <SelectButton
+                    classname="button select"
+                    label="Select"
+                    onClick={() => buttonClicked(listDat, "select")}
+                  />
+                  <RemoveButton
+                    classname="button delete"
+                    label="Remove"
+                    onClick={() => buttonClicked(listDat, "delete")}
+                  />
+                </div>
+              </React.Fragment>
+            ))}
           </div>
           {selectApi ? (
             <DetailData RowData={selectApi} positionY={"500"} />
