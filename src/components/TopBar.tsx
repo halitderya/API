@@ -28,7 +28,19 @@ export const TopBar: React.FC<topBarProps> = ({
   };
 
   const handleCorsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.target.value == "Yes" ? onCorsChange(true) : onCorsChange(false);
+    switch (event.target.value) {
+      case "all":
+        onCorsChange("all");
+        break;
+      case "yes":
+        onCorsChange("yes");
+
+        break;
+      case "unknown":
+        onCorsChange("unknown");
+
+        break;
+    }
   };
 
   return (
@@ -36,11 +48,19 @@ export const TopBar: React.FC<topBarProps> = ({
       <fieldset>
         <legend>Cors:</legend>
         <div onChange={handleCorsChange}>
-          <input type="radio" id="corstrue" name="corsoption" value="true" />
-          <label htmlFor="corstrue">Yes</label>
+          <input type="radio" id="corsyes" name="corsoption" value="yes" />
+          <label htmlFor="corsyes">Yes</label>
 
-          <input type="radio" id="corsfalse" name="corsoption" value="false" />
-          <label htmlFor="corsfalse">No</label>
+          <input
+            type="radio"
+            id="corsunknown"
+            name="corsoption"
+            value="unknown"
+          />
+          <label htmlFor="corsunknown">No</label>
+
+          <input type="radio" id="corsall" name="corsoption" value="all" />
+          <label htmlFor="corsall">All</label>
         </div>
       </fieldset>
       <div className="searchgroup">
@@ -56,7 +76,6 @@ export const TopBar: React.FC<topBarProps> = ({
 
         <input
           onChange={handleSearchChange}
-          //  value={onSearch.toString()}
           className="searchbar"
           type="text"
           placeholder="Search..."

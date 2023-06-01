@@ -12,7 +12,7 @@ export const ListData: React.FC<{}> = ({}) => {
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
   const refselectedcategory = useRef<string>("");
   const refsearchterm = useRef<string>("");
-  const refcors = useRef<boolean>(true);
+  const refcors = useRef<string>("all");
 
   const handleCategoryChange = (catselected: string) => {
     console.log(
@@ -32,28 +32,33 @@ export const ListData: React.FC<{}> = ({}) => {
     masterfilterhandler();
   };
 
-  const handleCorsChange = (cors: boolean) => {
-    refcors.current = !refcors.current;
-    console.log("refcors :", refcors.current);
+  const handleCorsChange = (cors: string) => {
+    refcors.current = cors;
+    if (refcors.current == "yes") {
+      console.log("corshandlerworked cors :", cors);
+
+      setFiltered(listData.filter((item) => item.Cors === "yes"));
+      console.log(cors, filtered);
+    } else if (refcors.current == "unknown") {
+      console.log(cors, filtered);
+
+      /*       setFiltered(
+        listData.filter((item) => !item.hasOwnProperty("unknown") || item.Cors)
+      ); */
+    } else if (refcors.current == "all") {
+      setFiltered(listData);
+      masterfilterhandler();
+    }
+
     masterfilterhandler();
   };
 
   const masterfilterhandler = () => {
-    if (refcors.current == true) {
-      setFiltered(
-        listData.filter((listd) => {
-          return listData.filter(
-            (item) => !item.hasOwnProperty("Yes") || item.Cors
-          );
-        })
-      );
-    } else {
-    }
     if (
       refselectedcategory.current == "---All---" &&
       refsearchterm.current == ""
     ) {
-      setFiltered(listData);
+      //  setFiltered(listData);
       ///////// category not selected - search not entered
       console.log(
         "1 category-all selected: ",
