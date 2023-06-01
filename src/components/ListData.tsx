@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ApiResponse, RowDataProps } from "./types";
 import { RemoveButton, SelectButton } from "../components/button/button";
 import DetailData from "./detailData";
@@ -10,17 +10,17 @@ export const ListData: React.FC<{}> = ({}) => {
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
-  let selectedcategory: string = "";
-  let searchterm: string = "";
+  const selectedcategory = useRef<string>("");
+  const searchterm = useRef<string>("");
 
   const handleCategoryChange = (catselected: string) => {
-    selectedcategory = catselected;
-    masterfilterhandler(catselected, searchterm);
+    selectedcategory.current = catselected;
+    masterfilterhandler(selectedcategory.current, searchterm.current);
   };
 
   const handleSearchTerm = (term: string) => {
-    searchterm = term;
-    masterfilterhandler(selectedcategory, term);
+    searchterm.current = term;
+    masterfilterhandler(selectedcategory.current, searchterm.current);
   };
 
   const masterfilterhandler = (
