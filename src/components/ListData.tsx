@@ -39,18 +39,17 @@ export const ListData: React.FC<{}> = ({}) => {
 
       setFiltered(listData.filter((item) => item.Cors === "yes"));
       console.log(cors, filtered);
+      masterfilterhandler();
     } else if (refcors.current == "unknown") {
       console.log(cors, filtered);
 
-      /*       setFiltered(
-        listData.filter((item) => !item.hasOwnProperty("unknown") || item.Cors)
-      ); */
+      setFiltered(listData.filter((item) => item.Cors === "unknown"));
+      console.log(cors, filtered);
+      masterfilterhandler();
     } else if (refcors.current == "all") {
       setFiltered(listData);
       masterfilterhandler();
     }
-
-    masterfilterhandler();
   };
 
   const masterfilterhandler = () => {
@@ -58,7 +57,7 @@ export const ListData: React.FC<{}> = ({}) => {
       refselectedcategory.current == "---All---" &&
       refsearchterm.current == ""
     ) {
-      //  setFiltered(listData);
+      // handleCorsChange(refcors.current);
       ///////// category not selected - search not entered
       console.log(
         "1 category-all selected: ",
@@ -66,6 +65,7 @@ export const ListData: React.FC<{}> = ({}) => {
         "searchterm not entered: ",
         refsearchterm
       );
+      setFiltered(listData);
       //////////////
     } else if (
       refselectedcategory.current !== "---All---" &&
@@ -99,7 +99,7 @@ export const ListData: React.FC<{}> = ({}) => {
         " ENTERED"
       );
       ////////
-      let temp = listData.filter((listd) => {
+      let temp = filtered.filter((listd) => {
         return listd.Category.indexOf(refselectedcategory.current) !== -1;
       });
 
