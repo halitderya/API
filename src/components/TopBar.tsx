@@ -5,6 +5,7 @@ export const TopBar: React.FC<topBarProps> = ({
   onSearch,
   categoryList,
   onCategoryChange,
+  onCorsChange,
 }) => {
   // const [category, setCategory] = useState<string[]>(categoryList!);
 
@@ -26,22 +27,22 @@ export const TopBar: React.FC<topBarProps> = ({
     onCategoryChange(event.target.value);
   };
 
+  const handleCorsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.value == "Yes" ? onCorsChange(true) : onCorsChange(false);
+  };
+
   return (
     <div className="topbar">
-      <label>Filter By CORS</label>
-      <div className="radiogroup">
-        <br />
-        <div className="radioitem">
-          <label htmlFor="radiocors"> Yes</label>
-          <input name="radiocors" type="radio"></input>
-        </div>
-        <div className="radioitem">
-          <label htmlFor="radiocors"> No</label>
-          <input name="radiocors" type="radio"></input>
-        </div>
+      <fieldset>
+        <legend>Cors:</legend>
+        <div onChange={handleCorsChange}>
+          <input type="radio" id="corstrue" name="corsoption" value="true" />
+          <label htmlFor="corstrue">Yes</label>
 
-        <div></div>
-      </div>
+          <input type="radio" id="corsfalse" name="corsoption" value="false" />
+          <label htmlFor="corsfalse">No</label>
+        </div>
+      </fieldset>
       <div className="searchgroup">
         <select
           defaultValue={"---All---"}

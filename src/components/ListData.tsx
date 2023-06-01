@@ -10,61 +10,100 @@ export const ListData: React.FC<{}> = ({}) => {
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
-  const selectedcategory = useRef<string>("");
-  const searchterm = useRef<string>("");
+  const refselectedcategory = useRef<string>("");
+  const refsearchterm = useRef<string>("");
+  const refcors = useRef<boolean>(true);
 
   const handleCategoryChange = (catselected: string) => {
-    selectedcategory.current = catselected;
-    masterfilterhandler(selectedcategory.current, searchterm.current);
+    console.log(
+      "category changed new log",
+      catselected,
+      "search: ",
+      refsearchterm
+    );
+    refselectedcategory.current = catselected;
+    masterfilterhandler();
   };
 
   const handleSearchTerm = (term: string) => {
-    searchterm.current = term;
-    masterfilterhandler(selectedcategory.current, searchterm.current);
+    console.log("handleworked");
+    console.log(filtered);
+    refsearchterm.current = term;
+    masterfilterhandler();
   };
 
-  const masterfilterhandler = (
-    selectedcategory: string,
-    searchterm?: string
-  ) => {
-    if (selectedcategory == "---All---" && searchterm == "") {
-      setFiltered(listData); // initial state
-      console.log(
-        "1 category selected: ",
-        selectedcategory,
-        "searchterm not entered: ",
-        searchterm
-      );
-      selectedcategory = "";
-    } else if (selectedcategory !== "---All---" && searchterm == "") {
-      console.log(
-        "2 category selected: ",
-        selectedcategory,
-        "searchterm not entered: ",
-        searchterm
-      );
+  const handleCorsChange = (cors: boolean) => {
+    refcors.current = !refcors.current;
+    console.log("refcors :", refcors.current);
+    masterfilterhandler();
+  };
+
+  const masterfilterhandler = () => {
+    if (refcors.current == true) {
       setFiltered(
         listData.filter((listd) => {
-          return listd.Category.indexOf(selectedcategory!) !== -1;
+          return listData.filter(
+            (item) => !item.hasOwnProperty("Yes") || item.Cors
+          );
+        })
+      );
+    } else {
+    }
+    if (
+      refselectedcategory.current == "---All---" &&
+      refsearchterm.current == ""
+    ) {
+      setFiltered(listData);
+      ///////// category not selected - search not entered
+      console.log(
+        "1 category-all selected: ",
+        refselectedcategory,
+        "searchterm not entered: ",
+        refsearchterm
+      );
+      //////////////
+    } else if (
+      refselectedcategory.current !== "---All---" &&
+      refsearchterm.current == ""
+    ) {
+      //////// category selected- search not entered
+
+      console.log(
+        "2 category selected: ",
+        refselectedcategory,
+        "searchterm not entered: ",
+        refsearchterm
+      );
+      ////////////
+      setFiltered(
+        listData.filter((listd) => {
+          return listd.Category.indexOf(refselectedcategory.current) !== -1;
         })
       );
       console.log("filtered :", filtered);
-    } else if (selectedcategory !== "---All---" && searchterm !== "") {
+    } else if (
+      refselectedcategory.current !== "---All---" &&
+      refsearchterm.current !== ""
+    ) {
+      //////// category selected- search entered
       console.log(
         "3 CATEGORY ",
-        selectedcategory,
+        refselectedcategory,
         " SELECTED SEARCH ",
-        searchterm,
+        refsearchterm,
         " ENTERED"
       );
+      ////////
       let temp = listData.filter((listd) => {
-        return listd.Category.indexOf(selectedcategory!) !== -1;
+        return listd.Category.indexOf(refselectedcategory.current) !== -1;
       });
 
       setFiltered(
         temp.filter((filt) => {
           return (
-            filt.API.toLowerCase().indexOf(searchterm!.toLowerCase()) !== -1
+            filt.API.toLowerCase().indexOf(
+              refsearchterm.current.toLowerCase()
+            ) !== -1
           );
         })
       );
@@ -84,6 +123,7 @@ export const ListData: React.FC<{}> = ({}) => {
         setListdata(data.entries);
         setFiltered(data.entries);
         setLoading(false);
+        refselectedcategory.current = "---All---";
       });
   }, []);
 
@@ -106,6 +146,7 @@ export const ListData: React.FC<{}> = ({}) => {
             onSearch={handleSearchTerm}
             categoryList={category(listData)}
             onCategoryChange={handleCategoryChange}
+            onCorsChange={handleCorsChange}
           />
         )}
 
