@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.css";
 
 export const DetailData: React.FC<{
   RowData: RowDataProps;
-  positionY: string;
-}> = (rowData, positionY) => {
+  position: string;
+}> = (rowData, position) => {
   return (
     <React.Fragment>
       <div className="nav right" style={{}}>

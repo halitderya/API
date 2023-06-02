@@ -76,6 +76,7 @@ export const ListData: React.FC<{}> = ({}) => {
     if (sender == "select") {
       setselectedApi(api);
     } else if (sender == "delete") {
+      console.log("denele");
       let newvalues = listData.filter((listelement) => listelement !== api);
       setListdata(newvalues);
       setselectedApi(undefined);
@@ -125,7 +126,7 @@ export const ListData: React.FC<{}> = ({}) => {
             ))}
           </div>
           {selectApi ? (
-            <DetailData RowData={selectApi} positionY={"500"} />
+            <DetailData RowData={selectApi} position={"500"} />
           ) : null}
         </div>
       </div>
