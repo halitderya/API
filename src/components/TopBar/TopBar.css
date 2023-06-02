@@ -1,0 +1,49 @@
+.searchgroup {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.categoryselect {
+  position: relative;
+  display: inline-block;
+  width: 30%;
+}
+.searchbar {
+  width: 70%;
+  margin-left: 10px;
+}
+legend {
+  display: flex;
+  width: fit-content;
+}
+.buttondiv {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.categoryselect-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+fieldset {
+  display: flex;
+}
+.categoryselect:hover .categoryselect-content {
+  display: block;
+}
+.topbar {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+.radiogroup {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
