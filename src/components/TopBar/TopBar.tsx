@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { topBarProps } from "./types";
+import { topBarProps } from "../types";
+import "../TopBar/TopBar.css";
 
 export const TopBar: React.FC<topBarProps> = ({
   onSearch,
@@ -35,7 +36,7 @@ export const TopBar: React.FC<topBarProps> = ({
     <div className="topbar">
       <fieldset>
         <legend>Filter by Cors :</legend>
-        <div onChange={handleCorsChange}>
+        <div className="buttondiv" onChange={handleCorsChange}>
           <input type="radio" id="corsyes" name="corsoption" value="yes" />
           <label htmlFor="corsyes">Yes</label>
 

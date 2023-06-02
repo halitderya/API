@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ApiResponse, RowDataProps } from "./types";
 import { RemoveButton, SelectButton } from "../components/button/button";
 import DetailData from "./detailData";
-import TopBar from "./TopBar";
+import TopBar from "./TopBar/TopBar";
 const URL: string = "https://api.publicapis.org/entries";
 
 export const ListData: React.FC<{}> = ({}) => {

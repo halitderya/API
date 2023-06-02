@@ -12,12 +12,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-.searchgroup {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -66,43 +60,6 @@
   flex-direction: row;
 }
 
-.categoryselect {
-  position: relative;
-  display: inline-block;
-  width: 30%;
-}
-.searchbar {
-  width: 70%;
-  margin-left: 10px;
-}
-
-.categoryselect-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 12px 16px;
-  z-index: 1;
-}
-
-.categoryselect:hover .categoryselect-content {
-  display: block;
-}
-.topbar {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 50px;
-}
-.radioitem {
-  min-width: 10%;
-}
-.radiogroup {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 10px;
-}
 .right {
   flex: 3;
   display: flex;
