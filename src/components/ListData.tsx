@@ -10,112 +10,53 @@ export const ListData: React.FC<{}> = ({}) => {
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
-  const refselectedcategory = useRef<string>("");
+  const refselectedcategory = useRef<string>("---All---");
   const refsearchterm = useRef<string>("");
   const refcors = useRef<string>("all");
 
   const handleCategoryChange = (catselected: string) => {
-    console.log(
-      "category changed new log",
-      catselected,
-      "search: ",
-      refsearchterm
-    );
     refselectedcategory.current = catselected;
+    console.log("handleCategoryChange :", refselectedcategory.current);
     masterfilterhandler();
   };
 
   const handleSearchTerm = (term: string) => {
-    console.log("handleworked");
-    console.log(filtered);
     refsearchterm.current = term;
     masterfilterhandler();
   };
 
   const handleCorsChange = (cors: string) => {
     refcors.current = cors;
-    if (refcors.current == "yes") {
-      console.log("corshandlerworked cors :", cors);
-
-      setFiltered(listData.filter((item) => item.Cors === "yes"));
-      console.log(cors, filtered);
-      masterfilterhandler();
-    } else if (refcors.current == "unknown") {
-      console.log(cors, filtered);
-
-      setFiltered(listData.filter((item) => item.Cors === "unknown"));
-      console.log(cors, filtered);
-      masterfilterhandler();
-    } else if (refcors.current == "all") {
-      setFiltered(listData);
-      masterfilterhandler();
-    }
+    masterfilterhandler();
   };
 
   const masterfilterhandler = () => {
-    if (
-      refselectedcategory.current == "---All---" &&
-      refsearchterm.current == ""
-    ) {
-      // handleCorsChange(refcors.current);
-      ///////// category not selected - search not entered
-      console.log(
-        "1 category-all selected: ",
-        refselectedcategory,
-        "searchterm not entered: ",
-        refsearchterm
-      );
-      setFiltered(listData);
-      //////////////
-    } else if (
-      refselectedcategory.current !== "---All---" &&
-      refsearchterm.current == ""
-    ) {
-      //////// category selected- search not entered
+    setFiltered(() => {
+      let filteredData = listData;
 
-      console.log(
-        "2 category selected: ",
-        refselectedcategory,
-        "searchterm not entered: ",
-        refsearchterm
-      );
-      ////////////
-      setFiltered(
-        listData.filter((listd) => {
-          return listd.Category.indexOf(refselectedcategory.current) !== -1;
-        })
-      );
-      console.log("filtered :", filtered);
-    } else if (
-      refselectedcategory.current !== "---All---" &&
-      refsearchterm.current !== ""
-    ) {
-      //////// category selected- search entered
-      console.log(
-        "3 CATEGORY ",
-        refselectedcategory,
-        " SELECTED SEARCH ",
-        refsearchterm,
-        " ENTERED"
-      );
-      ////////
-      let temp = filtered.filter((listd) => {
-        return listd.Category.indexOf(refselectedcategory.current) !== -1;
-      });
+      if (refselectedcategory.current !== "---All---") {
+        filteredData = filteredData.filter((filt) => {
+          return filt.Category.indexOf(refselectedcategory.current) !== -1;
+        });
+      }
 
-      setFiltered(
-        temp.filter((filt) => {
+      if (refsearchterm.current !== "") {
+        filteredData = filteredData.filter((filt) => {
           return (
             filt.API.toLowerCase().indexOf(
               refsearchterm.current.toLowerCase()
             ) !== -1
           );
-        })
-      );
-    }
-  };
+        });
+      }
 
-  ////////////search ended
+      if (refcors.current === "yes") {
+        filteredData = filteredData.filter((item) => item.Cors === "yes");
+      }
+
+      return filteredData;
+    });
+  };
 
   let category = function (data: RowDataProps[]): string[] {
     return Array.from(new Set(data.map((obj) => obj.Category)));
@@ -128,7 +69,6 @@ export const ListData: React.FC<{}> = ({}) => {
         setListdata(data.entries);
         setFiltered(data.entries);
         setLoading(false);
-        refselectedcategory.current = "---All---";
       });
   }, []);
 

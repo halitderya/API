@@ -28,39 +28,19 @@ export const TopBar: React.FC<topBarProps> = ({
   };
 
   const handleCorsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    switch (event.target.value) {
-      case "all":
-        onCorsChange("all");
-        break;
-      case "yes":
-        onCorsChange("yes");
-
-        break;
-      case "unknown":
-        onCorsChange("unknown");
-
-        break;
-    }
+    onCorsChange(event.target.value);
   };
 
   return (
     <div className="topbar">
       <fieldset>
-        <legend>Cors:</legend>
+        <legend>Filter by Cors :</legend>
         <div onChange={handleCorsChange}>
           <input type="radio" id="corsyes" name="corsoption" value="yes" />
           <label htmlFor="corsyes">Yes</label>
 
-          <input
-            type="radio"
-            id="corsunknown"
-            name="corsoption"
-            value="unknown"
-          />
-          <label htmlFor="corsunknown">No</label>
-
-          <input type="radio" id="corsall" name="corsoption" value="all" />
-          <label htmlFor="corsall">All</label>
+          <input type="radio" id="corsno" name="corsoption" value="no" />
+          <label htmlFor="corsno">No</label>
         </div>
       </fieldset>
       <div className="searchgroup">
