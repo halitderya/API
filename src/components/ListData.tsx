@@ -72,16 +72,14 @@ export const ListData: React.FC<{}> = ({}) => {
       });
   }, []);
 
-  function buttonClicked(api: RowDataProps, sender: string): void {
-    if (sender == "select") {
-      setselectedApi(api);
-    } else if (sender == "delete") {
-      console.log("denele");
-      let newvalues = listData.filter((listelement) => listelement !== api);
-      setListdata(newvalues);
-      setselectedApi(undefined);
-    }
+  function selectButtonClicked(api: RowDataProps): void {
+    setselectedApi(api);
   }
+  function removeButtonClicked(api: RowDataProps): void {
+    setFiltered(filtered.filter((listelement) => listelement !== api));
+    setselectedApi(undefined);
+  }
+
   return (
     <>
       <div className="container">
@@ -98,9 +96,6 @@ export const ListData: React.FC<{}> = ({}) => {
 
         <div className={` ${!loading ? "content" : ""} `}>
           <div className="nav left">
-            {/*           {listData.map((listDat: RowDataProps) => (
-             */}
-
             {filtered.map((listDat: RowDataProps) => (
               <React.Fragment key={listDat.API + listDat.Description}>
                 <div className="listitem">
@@ -114,12 +109,12 @@ export const ListData: React.FC<{}> = ({}) => {
                   <SelectButton
                     classname="button select"
                     label="Select"
-                    onClick={() => buttonClicked(listDat, "select")}
+                    onClick={() => selectButtonClicked(listDat)}
                   />
                   <RemoveButton
                     classname="button delete"
                     label="Remove"
-                    onClick={() => buttonClicked(listDat, "delete")}
+                    onClick={() => removeButtonClicked(listDat)}
                   />
                 </div>
               </React.Fragment>
