@@ -51,7 +51,9 @@ export const TopBar: React.FC<topBarProps> = ({
           className="categoryselect"
         >
           {categoryLis!.map((cat) => (
-            <option value={cat.toString()}>{cat.toString()}</option>
+            <option key={cat} value={cat.toString()}>
+              {cat.toString()}
+            </option>
           ))}
         </select>
 
