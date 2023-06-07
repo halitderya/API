@@ -12,7 +12,7 @@ export const ListData: React.FC<{}> = ({}) => {
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
   const refselectedcategory = useRef<string>("---All---");
   const refsearchterm = useRef<string>("");
-  const refcors = useRef<string>("all");
+  const refcors = useRef<boolean>(false);
 
   const handleCategoryChange = (catselected: string) => {
     refselectedcategory.current = catselected;
@@ -25,7 +25,7 @@ export const ListData: React.FC<{}> = ({}) => {
     masterfilterhandler();
   };
 
-  const handleCorsChange = (cors: string) => {
+  const handleCorsChange = (cors: boolean) => {
     refcors.current = cors;
     masterfilterhandler();
   };
@@ -50,7 +50,7 @@ export const ListData: React.FC<{}> = ({}) => {
         });
       }
 
-      if (refcors.current === "yes") {
+      if (refcors.current === true) {
         filteredData = filteredData.filter((item) => item.Cors === "yes");
       }
 

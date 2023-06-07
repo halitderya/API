@@ -29,7 +29,7 @@ export const TopBar: React.FC<topBarProps> = ({
   };
 
   const handleCorsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onCorsChange(event.target.value);
+    onCorsChange(event.target.checked);
   };
 
   return (
@@ -37,11 +37,8 @@ export const TopBar: React.FC<topBarProps> = ({
       <fieldset>
         <legend>Filter by Cors :</legend>
         <div className="buttondiv" onChange={handleCorsChange}>
-          <input type="radio" id="corsyes" name="corsoption" value="yes" />
+          <input type="checkbox" id="corsyes" name="corsoption" value="true" />
           <label htmlFor="corsyes">Yes</label>
-
-          <input type="radio" id="corsno" name="corsoption" value="no" />
-          <label htmlFor="corsno">No</label>
         </div>
       </fieldset>
       <div className="searchgroup">

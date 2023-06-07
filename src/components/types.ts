@@ -22,5 +22,5 @@ export interface topBarProps{
   onSearch: (term: string) => void;
   categoryList?: string[];
   onCategoryChange: (selectedcategory:string) => void;
-  onCorsChange:(cors:string) => void;
+  onCorsChange:(cors:boolean) => void;
 }
