@@ -19,7 +19,7 @@ export const ListData: React.FC<{}> = ({}) => {
     console.log("handleCategoryChange :", refselectedcategory.current);
     masterfilterhandler();
   };
-
+  //change
   const handleSearchTerm = (term: string) => {
     refsearchterm.current = term;
     masterfilterhandler();
