@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ApiResponse, RowDataProps } from "./types";
 import { RemoveButton, SelectButton } from "../components/button/button";
 import DetailData from "./detailData";
@@ -10,6 +15,7 @@ export const ListData: React.FC<{}> = ({}) => {
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
   const [filtered, setFiltered] = useState<RowDataProps[]>([]);
+  const [detailDataPosition, setdetailDataPosition] = useState<string>("");
   const refselectedcategory = useRef<string>("---All---");
   const refsearchterm = useRef<string>("");
   const refcors = useRef<boolean>(false);
@@ -19,7 +25,6 @@ export const ListData: React.FC<{}> = ({}) => {
     console.log("handleCategoryChange :", refselectedcategory.current);
     masterfilterhandler();
   };
-  //change
   const handleSearchTerm = (term: string) => {
     refsearchterm.current = term;
     masterfilterhandler();
@@ -72,8 +77,14 @@ export const ListData: React.FC<{}> = ({}) => {
       });
   }, []);
 
-  function selectButtonClicked(api: RowDataProps): void {
+  function selectButtonClicked(
+    api: RowDataProps,
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void {
     setselectedApi(api);
+    console.log("e", e.target as HTMLButtonElement);
+
+    setdetailDataPosition((e.pageY - 180).toString());
   }
   function removeButtonClicked(api: RowDataProps): void {
     setFiltered(filtered.filter((listelement) => listelement !== api));
@@ -109,7 +120,9 @@ export const ListData: React.FC<{}> = ({}) => {
                   <SelectButton
                     classname="button select"
                     label="Select"
-                    onClick={() => selectButtonClicked(listDat)}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      selectButtonClicked(listDat, e)
+                    }
                   />
                   <RemoveButton
                     classname="button delete"
@@ -121,7 +134,7 @@ export const ListData: React.FC<{}> = ({}) => {
             ))}
           </div>
           {selectApi ? (
-            <DetailData RowData={selectApi} position={"500"} />
+            <DetailData RowData={selectApi} position={detailDataPosition} />
           ) : null}
         </div>
       </div>

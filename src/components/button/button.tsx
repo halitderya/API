@@ -1,12 +1,7 @@
 import { ButtonProps } from "../types";
 import "./button.css";
 
-const Button: React.FC<ButtonProps> = ({
-  onClick,
-  label,
-  classname,
-  coordinates,
-}) => (
+const Button: React.FC<ButtonProps> = ({ onClick, label, classname }) => (
   <button className={classname} onClick={onClick}>
     {label}
   </button>
@@ -22,12 +17,4 @@ export const SelectButton: React.FC<ButtonProps> = ({
   onClick,
   label,
   classname,
-  coordinates,
-}) => (
-  <Button
-    onClick={onClick}
-    label={label}
-    classname={classname}
-    coordinates={coordinates}
-  />
-);
+}) => <Button onClick={onClick} label={label} classname={classname} />;
