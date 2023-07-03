@@ -4,7 +4,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ApiResponse, RowDataProps } from "./types";
+import { ApiResponse, ButtonProps, RowDataProps } from "./types";
 import { RemoveButton, SelectButton } from "../components/button/button";
 import DetailData from "./detailData";
 import TopBar from "./TopBar/TopBar";
@@ -82,8 +82,7 @@ export const ListData: React.FC<{}> = ({}) => {
     e: React.MouseEvent<HTMLButtonElement>
   ): void {
     setselectedApi(api);
-    console.log("e", e.target as HTMLButtonElement);
-
+    console.log(e.currentTarget as HTMLButtonElement);
     setdetailDataPosition((e.pageY - 180).toString());
   }
   function removeButtonClicked(api: RowDataProps): void {
@@ -120,6 +119,7 @@ export const ListData: React.FC<{}> = ({}) => {
                   <SelectButton
                     classname="button select"
                     label="Select"
+                    key={listDat.API}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                       selectButtonClicked(listDat, e)
                     }
