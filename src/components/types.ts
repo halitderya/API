@@ -1,4 +1,5 @@
 export interface RowDataProps {
+  id: number;
   API: string;
   Description: string;
   Auth: string;
