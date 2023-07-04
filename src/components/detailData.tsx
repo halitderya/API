@@ -8,7 +8,7 @@ export const DetailData: React.FC<{
 }> = (rowData, position) => {
   return (
     <React.Fragment>
-      <div className="nav right" style={{}}>
+      <div className="nav right" style={{ marginTop: 500 }}>
         <div className="element-group-detail">
           <label className="detaillabel">API</label>
           <input
