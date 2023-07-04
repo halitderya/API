@@ -1,21 +1,16 @@
 import React from "react";
 import { RowDataProps, ApiResponse } from "./types";
 import "bootstrap/dist/css/bootstrap.css";
-
 export const DetailData: React.FC<{
   RowData: RowDataProps;
   position: string;
-}> = (rowData, position) => {
+}> = ({ RowData, position }) => {
   return (
     <React.Fragment>
-      <div className="nav right" style={{ marginTop: 500 }}>
+      <div className="nav right" style={{ marginTop: `${position}px` }}>
         <div className="element-group-detail">
           <label className="detaillabel">API</label>
-          <input
-            value={rowData.RowData.API}
-            disabled
-            className="detailinput"
-          ></input>
+          <input value={RowData.API} disabled className="detailinput"></input>
         </div>
         <div className="element-group-detail">
           <label className="detaillabel">Auth</label>
@@ -24,23 +19,19 @@ export const DetailData: React.FC<{
         <div className="element-group-detail">
           <label className="detaillabel">Category</label>
           <input
-            value={rowData.RowData.Category}
+            value={RowData.Category}
             disabled
             className="detailinput"
           ></input>
         </div>
         <div className="element-group-detail">
           <label className="detaillabel">CORS</label>
-          <input
-            value={rowData.RowData.Cors}
-            disabled
-            className="detailinput"
-          ></input>
+          <input value={RowData.Cors} disabled className="detailinput"></input>
         </div>
         <div className="element-group-detail">
           <label className="detaillabel">Description</label>
           <input
-            value={rowData.RowData.Description}
+            value={RowData.Description}
             disabled
             className="detailinput"
           ></input>
@@ -48,18 +39,14 @@ export const DetailData: React.FC<{
         <div className="element-group-detail">
           <label className="detaillabel">HTTPS</label>
           <input
-            value={rowData.RowData.HTTPS.valueOf.toString()}
+            value={RowData.HTTPS.valueOf.toString()}
             disabled
             className="detailinput"
           ></input>
         </div>
         <div className="element-group-detail">
           <label className="detaillabel">Link</label>
-          <input
-            value={rowData.RowData.Link}
-            disabled
-            className="detailinput"
-          ></input>
+          <input value={RowData.Link} disabled className="detailinput"></input>
         </div>
       </div>
     </React.Fragment>

@@ -12,10 +12,9 @@ export interface ApiResponse {
   entries: RowDataProps[];
 }
 export interface ButtonProps {
-  onClick: () => void;
+  onClick?: (e:React.MouseEvent<HTMLButtonElement>) => void;
   label: string;
   classname: string;
-  coordinates?:string;
   
 }
 export interface topBarProps{
