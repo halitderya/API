@@ -1,10 +1,9 @@
 import React, {
-  ButtonHTMLAttributes,
   useEffect,
-  useRef,
   useState,
+  useMemo
 } from "react";
-import { ApiResponse, ButtonProps, RowDataProps } from "./types";
+import { ApiResponse, RowDataProps } from "./types";
 import { RemoveButton, SelectButton } from "../components/button/button";
 import DetailData from "./detailData";
 import TopBar from "./TopBar/TopBar";
@@ -14,56 +13,45 @@ export const ListData: React.FC<{}> = ({}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [listData, setListdata] = useState<RowDataProps[]>([]);
   const [selectApi, setselectedApi] = useState<RowDataProps>();
-  const [filtered, setFiltered] = useState<RowDataProps[]>([]);
   const [detailDataPosition, setdetailDataPosition] = useState<string>("");
-  const refselectedcategory = useRef<string>("---All---");
-  const refsearchterm = useRef<string>("");
-  const refcors = useRef<boolean>(false);
+
+  const [refselectedcategory, setrefselectedcategory] = useState("---All---");
+  const [refsearchterm, setrefsearchterm] = useState<string>("");
+  const [refcors, setrefcors] = useState<boolean>(false);
+  const [deletedIds, setDeletedIds] = useState(new Set());
+
 
   const handleCategoryChange = (catselected: string) => {
-    refselectedcategory.current = catselected;
-    console.log("handleCategoryChange :", refselectedcategory.current);
-    masterfilterhandler();
+    console.log({ catselected })
+    setrefselectedcategory(catselected);
   };
   const handleSearchTerm = (term: string) => {
-    refsearchterm.current = term;
-    masterfilterhandler();
+    setrefsearchterm(term);
   };
 
   const handleCorsChange = (cors: boolean) => {
-    refcors.current = cors;
-    masterfilterhandler();
+    setrefcors(cors);
   };
 
-  const masterfilterhandler = () => {
-    setFiltered(() => {
-      let filteredData = listData;
+  const filtered = useMemo<RowDataProps[]>(() => {
+    const result = [];
+  
+    for (let index = 0; index < listData.length; index++) {
+      const element = listData[index];
 
-      if (refselectedcategory.current !== "---All---") {
-        filteredData = filteredData.filter((filt) => {
-          return filt.Category.indexOf(refselectedcategory.current) !== -1;
-        });
+      const isCategoryValid = refselectedcategory === "---All---" || element.Category.toLowerCase() === refselectedcategory.toLowerCase();
+      const isSearchtermValid = refsearchterm === "" || element.API.toLowerCase().indexOf(refsearchterm.toLowerCase()) !== -1;
+      const isCorsValid = !refcors || element.Cors === "yes";
+      const isDeleted = deletedIds.has(element.id);
+
+      if (isCategoryValid && isSearchtermValid && isCorsValid && !isDeleted) {
+        result.push(element);
       }
+    }
+    return result;
+  }, [listData, refcors, refsearchterm, refselectedcategory, deletedIds]);
 
-      if (refsearchterm.current !== "") {
-        filteredData = filteredData.filter((filt) => {
-          return (
-            filt.API.toLowerCase().indexOf(
-              refsearchterm.current.toLowerCase()
-            ) !== -1
-          );
-        });
-      }
-
-      if (refcors.current === true) {
-        filteredData = filteredData.filter((item) => item.Cors === "yes");
-      }
-
-      return filteredData;
-    });
-  };
-
-  let category = function (data: RowDataProps[]): string[] {
+  const category = function (data: RowDataProps[]): string[] {
     return Array.from(new Set(data.map((obj) => obj.Category)));
   };
 
@@ -71,8 +59,7 @@ export const ListData: React.FC<{}> = ({}) => {
     fetch(URL)
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        setListdata(data.entries);
-        setFiltered(data.entries);
+        setListdata(data.entries.map((entry) => ({ ...entry, id: Math.floor(Math.random() * 100000000), })));
         setLoading(false);
       });
   }, []);
@@ -86,7 +73,9 @@ export const ListData: React.FC<{}> = ({}) => {
     setdetailDataPosition((e.pageY - 180).toString());
   }
   function removeButtonClicked(api: RowDataProps): void {
-    setFiltered(filtered.filter((listelement) => listelement !== api));
+    const deletedIdsCopy = new Set(Array.from(deletedIds));
+    deletedIdsCopy.add(api.id);
+    setDeletedIds(deletedIdsCopy);
     setselectedApi(undefined);
   }
 
@@ -106,8 +95,8 @@ export const ListData: React.FC<{}> = ({}) => {
 
         <div className={` ${!loading ? "content" : ""} `}>
           <div className="nav left">
-            {filtered.map((listDat: RowDataProps) => (
-              <React.Fragment key={listDat.API + listDat.Description}>
+            {filtered.map((listDat) => (
+              <React.Fragment key={listDat.id}>
                 <div className="listitem">
                   <p>
                     {"Name: " +
