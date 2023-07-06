@@ -13,14 +13,26 @@ export const TopBar: React.FC<topBarProps> = ({
   let categoryLis = categoryList;
   if (categoryLis!.indexOf("---All---") === -1)
     categoryLis!.unshift("---All---");
-
-  useEffect(() => {
-    //since react is in strict mode, useeffects works twice.
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(event.target.value);
   };
+
+  function debounce(func: Function, delay: number) {
+    let timeoutID: any = null;
+    return function (...args: any) {
+      clearTimeout(timeoutID);
+      timeoutID = setTimeout(() => func(...args), delay);
+    };
+  }
+
+  const debouncedHandleSearch = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleSearchChange(event);
+    },
+    500
+  );
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -55,7 +67,7 @@ export const TopBar: React.FC<topBarProps> = ({
         </select>
 
         <input
-          onChange={handleSearchChange}
+          onChange={debouncedHandleSearch}
           className="searchbar"
           type="text"
           placeholder="Search..."
