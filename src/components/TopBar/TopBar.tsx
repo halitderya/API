@@ -27,12 +27,12 @@ export const TopBar: React.FC<topBarProps> = ({
     };
   }
 
-  const debouncedHandleSearch = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      handleSearchChange(event);
-    },
-    500
-  );
+  const debouncedHandleSearch = debounce(function (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    handleSearchChange(event);
+  },
+  500);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
